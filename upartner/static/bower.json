@@ -1,0 +1,24 @@
+{
+  "name": "uber",
+  "version": "1.0.0",
+  "dependencies": {
+    "bootstrap": "3.0.3",
+    "angular": "1.2.16",
+    "angular-resource": "1.2.16",
+    "angular-ui-router": "0.2.10",
+    "angularjs-l10n": "1.2.0",
+    "angular-i18n": "1.2.16",
+    "angular-bootstrap": "0.10.0",
+    "angular-ui-select2": "0.0.5",
+    "lodash": "2.1.0",
+    "select2": "3.5.1",
+    "jquery": "jquery#1.10",
+    "jquery-ui": "1.10.3",
+    "blueimp-file-upload": "9.9.4",
+    "font-awesome": "4.3.0",
+    "moment": "2.10.6"
+  },
+  "resolutions": {
+    "select2": "~3.4"
+  }
+}
