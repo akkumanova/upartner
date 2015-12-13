@@ -3,6 +3,7 @@ from django.http import Http404
 from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework.response import Response
+from rest_framework import status
 
 from .models import Partner
 
@@ -46,20 +47,16 @@ class PartnerDetail(APIView):
         except Partner.DoesNotExist:
             raise Http404
 
-    def get(self, request, pk, format=None):
-        partner = self.get_object(pk)
-        result = {
-            'id': partner.id,
-            'userId': partner.user.id,
-            'username': partner.user.username,
-            'first_name': partner.user.first_name,
-            'last_name': partner.user.last_name,
-            'email': partner.user.email,
-            'is_staff': partner.user.is_staff,
-            'is_active': partner.user.is_active,
-            'country': partner.country.name,
-            'check_result': partner.check_result
+    def get(self, request, id):
+        partner = self.get_object(id)
 
-        }
+        return Response(partner.get_data())
 
-        return Response(result)
+    def put(self, request, id):
+        partner = self.get_object(id)
+
+        partner.set_data(request.data)
+        partner.user.save()
+        partner.save()
+
+        return Response(status=status.HTTP_200_OK)

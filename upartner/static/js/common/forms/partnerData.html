@@ -1,0 +1,19 @@
+<ng-form sc-validate="{}" sc-form-readonly>
+  <div class="row">
+    <sc-field type="text" ng-model="model.username" ng-readonly="true" l10n-text="forms_partnerData_username" class="col-sm-4 col-md-3"></sc-field>
+    <sc-field type="text" ng-model="model.checkResult" ng-readonly="true" l10n-text="forms_partnerData_checkResult" class="col-sm-4 col-md-3"></sc-field>
+  </div>
+  <div class="row">
+    <sc-field type="text" ng-model="model.firstName" l10n-text="forms_partnerData_firstName" ng-required="true" class="col-sm-8 col-md-6"></sc-field>
+  </div>
+  <div class="row">
+    <sc-field type="text" ng-model="model.lastName" l10n-text="forms_partnerData_lastName" ng-required="true" class="col-sm-8 col-md-6"></sc-field>
+  </div>
+
+  <div class="row">
+    <sc-field type="text" ng-model="model.email" ng-model="model.email" ng-required="true" l10n-text="forms_partnerData_email" class="col-sm-8 col-md-6"></sc-field>
+  </div>
+  <div class="row">
+    <sc-field type="nomenclature" alias="'countries'" mode="id" ng-model="model.countryId" ng-required="true" l10n-text="forms_partnerData_country" class="col-sm-4 col-md-3"></sc-field>
+  </div>
+</ng-form>

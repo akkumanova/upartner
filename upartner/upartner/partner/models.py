@@ -29,6 +29,25 @@ class Partner(models.Model):
         choices=CHECK_RESULT_CHOICES,
         default=FAKE_DOCS)
 
+    def get_data(self):
+        return {
+            'id': self.id,
+            'userId': self.user.id,
+            'username': self.user.username,
+            'firstName': self.user.first_name,
+            'lastName': self.user.last_name,
+            'email': self.user.email,
+            'isActive': self.user.is_active,
+            'countryId': self.country_id,
+            'checkResult': self.check_result
+        }
+
+    def set_data(self, dict):
+        self.user.first_name = dict.get('firstName')
+        self.user.last_name = dict.get('lastName')
+        self.user.email = dict.get('email')
+        self.country_id = dict.get('countryId')
+
     class Meta:
         db_table = 'uber_partners'
         verbose_name = 'Uber partner'

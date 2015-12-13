@@ -9,6 +9,7 @@
     'ui.router',
     'l10n',
     'boot',
+    'common',
     'main'
   ]).config([
     '$urlRouterProvider',
@@ -54,5 +55,14 @@
       Pragma: 'no-cache',
       Expires: '0'
     };
-  }]);
+  }]).factory('csrfToken', function () {
+    return {
+      get: function () {
+        var match = /(^|;\s?)csrftoken=(.+?)($|;)/.exec(window.document.cookie),
+            csrfToken = match && match[2];
+
+        return csrfToken;
+      }
+    };
+  });
 }(angular, _));

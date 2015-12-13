@@ -22,7 +22,16 @@
       datatable_filtered: ' (filtered from {{max}} records)',
       datatable_deleteColumns: 'Columns',
       datatable_yes: 'Yes',
-      datatable_no: 'No'
+      datatable_no: 'No',
+
+      // defaultErrorTexts
+      defaultErrorTexts_required: 'Required field',
+      defaultErrorTexts_pattern: 'Invalid format',
+      defaultErrorTexts_minlength: 'Maximum length exceeded',
+      defaultErrorTexts_maxlength: 'Minimum length requirement not met',
+      defaultErrorTexts_min: 'Minimal value requirement not met',
+      defaultErrorTexts_max: 'Minimum value requirement not met',
+      defaultErrorTexts_unique: 'Unique requirement not met'
     });
   }]);
 }(angular));

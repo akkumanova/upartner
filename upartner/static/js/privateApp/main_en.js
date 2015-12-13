@@ -18,7 +18,16 @@
       partners_search_email: 'Email',
       partners_search_country: 'Country',
       partners_search_isActive: 'Is active',
-      partners_search_checkResult: 'Check result'
+      partners_search_checkResult: 'Check result',
+
+      //partners_edit
+      partners_edit_title: 'Edit partner',
+      partners_edit_activate: 'Activate',
+      partners_edit_edit: 'Edit',
+      partners_edit_save: 'Save',
+      partners_edit_cancel: 'Cancel',
+      partners_edit_deactivate: 'Deactivate'
+
     });
   }]);
 }(angular));
