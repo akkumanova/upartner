@@ -1,0 +1,12 @@
+<sc-navigation user-fullname="{{userFullname}}" class="navigation">
+  <sc-navigation-item state="root.partners.search" text="navigation_partners" icon="glyphicon glyphicon-tower">
+  </sc-navigation-item>
+</sc-navigation>
+
+<div class="container alert-container">
+  <alert ng-repeat="alert in alerts" type="alert.type" close="removeAlert(alert)">
+    <span ng-bind-html="alert.message"></span>
+  </alert>
+</div>
+
+<div ui-view class="container" style="margin-top:60px;"></div>

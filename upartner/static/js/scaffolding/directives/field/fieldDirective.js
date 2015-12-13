@@ -1,0 +1,146 @@
+﻿// Usage: <sc-field type="int" model="" text="" validations=""></sc-field>
+
+/*global angular, _, $*/
+(function (angular, _, $) {
+  'use strict';
+
+  function FieldDirective($compile, $parse, l10n) {
+    function FieldCompile(tElement, tAttrs) {
+      var type = tAttrs.type,
+          customType = tAttrs.customType,
+          model = tAttrs.ngModel,
+          text = tAttrs.l10nText,
+          validations = tAttrs.validations,
+          cssClass = tAttrs['class'],
+          hasValidations = false,
+          currentValidations = [],
+          fieldName,
+          containerElement,
+          labelElement,
+          validationElement,
+          dirElement,
+          reqElement,
+          validationsList = {
+            'ng-required': 'required',
+            'ng-pattern': 'pattern',
+            minlength: 'minlength',
+            maxlength: 'maxlength',
+            min: 'min',
+            max: 'max'
+          },
+          mergedValidation,
+          defaultValidation;
+
+      if (!tAttrs.name) {
+        fieldName = _.contains(model, '.') ? _.last(model.split('.')) : model;
+      } else {
+        fieldName = tAttrs.name;
+      }
+
+      if (!cssClass && type === 'date') {
+        cssClass = 'col-sm-3 col-md-2';
+      }
+
+      if (customType !== undefined) {
+        dirElement = $('<' + customType + '></' + customType + '>');
+      } else {
+        dirElement = $('<sc-' + type + '></sc-' + type + '>');
+      }
+
+      dirElement.attr('ng-model', model)
+          .attr('name', fieldName);
+
+      if (!tAttrs.ngReadonly) {
+        dirElement.attr('ng-readonly', 'form.$readonly');
+      }
+
+      _.forOwn(tAttrs, function (val, key) {
+        if (key === 'type' || key === 'ngModel' || key === '$$element' || key === '$attr') {
+          return;
+        }
+        
+        tElement.removeAttr(tAttrs.$attr[key]);
+        
+        if (key === 'l10nText' || key === 'validations' || key === 'class' || key === 'ngShow') {
+          return;
+        }
+        
+        if (val) {
+          dirElement.attr(tAttrs.$attr[key], val);
+        } else {
+          dirElement.attr(tAttrs.$attr[key], true);
+        }
+        
+        if (_.has(validationsList, tAttrs.$attr[key])) {
+          hasValidations = true;
+          currentValidations.push(tAttrs.$attr[key]);
+        }
+      });
+
+      if (_.indexOf(currentValidations, 'ng-required') > -1) {
+        reqElement = '<span class="fa fa-exclamation" ng-show="!form.$validated ' +
+          '&& !form.$readonly && form[\'' + fieldName + '\'].$error.required"></span>';
+      }
+
+      containerElement = $('<div></div>').addClass('form-group ' + cssClass);
+      labelElement = $('<label>' + l10n.trans(text) + '</label>').addClass('control-label');
+      containerElement.append(labelElement);
+
+      if (tAttrs.ngShow) {
+        containerElement.attr(tAttrs.$attr.ngShow, tAttrs.ngShow);
+      }
+
+      if (validations) {
+        mergedValidation = $parse(validations)(null);
+        if (hasValidations) {
+          _(currentValidations).forEach(function (valName) {
+            if (!_.has(mergedValidation, validationsList[valName])) {
+              mergedValidation[validationsList[valName]] = 'default';
+            }
+          });
+        }
+        containerElement.attr('sc-has-error', fieldName);
+        validationElement =
+          $('<sc-validation-error></sc-validation-error>')
+            .attr('field-name', fieldName)
+            .attr('validations', JSON.stringify(mergedValidation));
+        containerElement.append(' ');
+        containerElement.append(validationElement);
+      } else if (hasValidations) {
+        defaultValidation = {};
+        _(currentValidations).forEach(function (valName) {
+          defaultValidation[validationsList[valName]] = 'default';
+        });
+        containerElement.attr('sc-has-error', fieldName);
+        validationElement =
+          $('<sc-validation-error></sc-validation-error>')
+            .attr('field-name', fieldName)
+            .attr('validations', JSON.stringify(defaultValidation));
+        containerElement.append(' ');
+        containerElement.append(validationElement);
+      }
+
+      containerElement.append(reqElement);
+      containerElement.append(dirElement);
+      tElement.append(containerElement);
+
+      return {
+        pre: function preLink(scope, iElement) {
+          $compile(iElement.children())(scope);
+        }
+      };
+    }
+
+    return {
+      restrict: 'E',
+      terminal: true,
+      priority: 120,
+      compile: FieldCompile
+    };
+  }
+
+  FieldDirective.$inject = ['$compile', '$parse', 'l10n'];
+
+  angular.module('scaffolding')
+    .directive('scField', FieldDirective);
+}(angular, _, $));

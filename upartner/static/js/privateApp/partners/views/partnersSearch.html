@@ -1,0 +1,29 @@
+<div class="well well-sm">
+  <div class="row">
+    <sc-field type="text" ng-model="filters.firstName" l10n-text="partners_search_firstName" class="col-sm-3"></sc-field>
+    <sc-field type="text" ng-model="filters.lastName" l10n-text="partners_search_lastName" class="col-sm-3"></sc-field>
+    <div class="labeless col-sm-6">
+      <sc-button name="seachBtn" btn-click="search()" text="partners_search_search" class="btn btn-default btn-sm pull-right" icon="glyphicon-search"></sc-button>
+    </div>
+  </div>
+</div>
+
+<sc-datatable items="partners" filterable="true" pageable="true" sortable="true" dynamic-columns="true">
+  <sc-column sortable="false" class="buttons-cell" has-content="true">
+    <sc-button name="viewButton" btn-sref="{state: 'root.partners.edit', params: { id: item.id }}" class="btn btn-xs btn-primary" icon="glyphicon-pencil"></sc-button>
+  </sc-column>
+  <sc-column data="firstName" title="partners_search_firstName">
+  </sc-column>
+  <sc-column data="lastName" title="partners_search_lastName">
+  </sc-column>
+  <sc-column data="username" title="partners_search_username" visible="false">
+  </sc-column>
+  <sc-column data="email" title="partners_search_email">
+  </sc-column>
+  <sc-column data="country" title="partners_search_country">
+  </sc-column>
+  <sc-column data="isActive" title="partners_search_isActive" type="boolean">
+  </sc-column>
+  <sc-column data="checkResult" title="partners_search_checkResult">
+  </sc-column>
+</sc-datatable>
