@@ -3,10 +3,10 @@
   </sc-navigation-item>
 </sc-navigation>
 
-<div class="container alert-container">
+<div class="container alert-container" style="margin-top:60px;">
   <alert ng-repeat="alert in alerts" type="alert.type" close="removeAlert(alert)">
     <span ng-bind-html="alert.message"></span>
   </alert>
 </div>
 
-<div ui-view class="container" style="margin-top:60px;"></div>
+<div ui-view class="container"></div>

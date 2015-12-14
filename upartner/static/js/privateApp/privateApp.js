@@ -42,7 +42,7 @@
           try {
             $rootScope = $rootScope || $injector.get('$rootScope');
             l10n = l10n || $injector.get('l10n');
-            $rootScope.$broadcast('alert', cause || l10n.trans('app.unknownErrorMessage'), 'danger');
+            $rootScope.$broadcast('alert', cause || l10n.trans('app_unknownErrorMessage'), 'danger');
           } catch (e) {
             //swallow all exception so that we don't end up in an infinite loop
           }

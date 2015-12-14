@@ -2,7 +2,7 @@
 (function (angular) {
   'use strict';
 
-  function RootCtrl($scope, $timeout, $http) {
+  function RootCtrl($scope, $timeout, $http, $sce) {
     $http({
       method: 'GET',
       url: 'api/users/current'
@@ -22,7 +22,7 @@
 
     $scope.$on('alert', function (event, msg, type) {
       try {
-        var alert = { message: msg, type: type };
+        var alert = { message: $sce.trustAsHtml(msg), type: type };
         $scope.alerts.push(alert);
 
         //remove the alert after 60 seconds
@@ -35,7 +35,7 @@
     });
   }
 
-  RootCtrl.$inject = ['$scope', '$timeout', '$http'];
+  RootCtrl.$inject = ['$scope', '$timeout', '$http', '$sce'];
 
   RootCtrl.$resolve = {};
 
