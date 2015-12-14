@@ -3,7 +3,7 @@ from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
 from rest_framework import routers
 
-from upartner.partner.api import PartnerViewSet
+from upartner.partner.api import PartnerViewSet, PartnerAccountViewSet
 from upartner.user.api import  UserViewSet
 from upartner.nomenclature.api import CountryList, CountryDetail
 
@@ -18,8 +18,9 @@ urlpatterns = [
 urlpatterns += staticfiles_urlpatterns()
 
 router = routers.DefaultRouter()
-router.register(r'api/partners', PartnerViewSet)
-router.register(r'api/users'   , UserViewSet   )
+router.register(r'api/partners'       , PartnerViewSet       )
+router.register(r'api/partnerAccounts', PartnerAccountViewSet)
+router.register(r'api/users'          , UserViewSet          )
 
 urlpatterns += router.urls
 

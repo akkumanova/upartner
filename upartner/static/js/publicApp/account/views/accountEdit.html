@@ -1,0 +1,22 @@
+<ng-form name="editPartners" sc-validate="{}" sc-form-readonly="!editMode">
+  <div class="panel panel-default">
+    <div class="panel-heading clearfix">
+      <strong class="heading" class="heading">{{ 'account_edit_title' | trans }}</strong>
+      <div class="pull-right">
+        <sc-button name="editBtn" btn-click="edit()" text="account_edit_edit" class="btn btn-primary btn-xs"
+                   icon="glyphicon-edit" ng-show="!editMode">
+        </sc-button>
+        <sc-button name="saveBtn" btn-click="save()" text="account_edit_save" class="btn btn-primary btn-xs"
+                   icon="glyphicon-floppy-disk" ng-show="editMode">
+        </sc-button>
+        <sc-button name="cancelBtn" btn-click="cancel()" text="account_edit_cancel" class="btn btn-default btn-xs"
+                   icon="glyphicon-ban-circle" ng-show="editMode">
+        </sc-button>
+      </div>
+    </div>
+
+    <div class="panel-body">
+      <ub-partner-data name="partnerDataForm" ng-model="partner" sc-form-params="{isNew: false}"></ub-partner-data>
+    </div>
+  </div>
+</ng-form>

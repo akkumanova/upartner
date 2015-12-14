@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Uber</title>
+  {% load staticfiles %}
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+  <link href="{% static "css\site.css" %}" rel="stylesheet" type="text/css">
+  <link href="{% static "bower_components\bootstrap\dist\css\bootstrap.css" %}" rel="stylesheet" type="text/css">
+  <link href="{% static "bower_components\select2\select2.css" %}" rel="stylesheet" type="text/css">
+  <link href="{% static "bower_components\select2-bootstrap-css\select2-bootstrap.css" %}" rel="stylesheet" type="text/css">
+</head>
+<body id="ng-app" ng-app="publicApp" style="background: #F9F8F8;">
+  <noscript>
+    <h2 style="text-align: center;">Page cannot be displayed if you have forbidden JavaScript</h2>
+  </noscript>
+
+  <div id="a" ui-view>
+    <div id="initial-loader">
+      <h4>Please wait...</h4>
+      <i></i>
+    </div>
+  </div>
+
+  <script src="{% static "bower_components\jquery\jquery.js" %}"></script>
+  <script src="{% static "bower_components\select2\select2.js" %}"></script>
+
+  <script src="{% static "bower_components\angular\angular.js" %}"></script>
+  <script src="{% static "bower_components\angular-resource\angular-resource.js" %}"></script>
+  <script src="{% static "bower_components\angular-ui-router\release\angular-ui-router.js" %}"></script>
+  <script src="{% static "bower_components\angularjs-l10n\src\angularjs-l10n.js" %}"></script>
+  <script src="{% static "bower_components\angular-ui-select2\src\select2.js" %}"></script>
+  <script src="{% static "bower_components\angular-bootstrap\ui-bootstrap.js" %}"></script>
+  <script src="{% static "bower_components\angular-ui-select2\src\select2.js" %}"></script>
+  <script src="{% static "bower_components\angular-bootstrap\ui-bootstrap-tpls.js" %}"></script>
+  <script src="{% static "bower_components\angular-sanitize\angular-sanitize.js" %}"></script>
+  <script src="{% static "bower_components\bootstrap\js\alert.js" %}"></script>
+  <script src="{% static "bower_components\lodash\dist\lodash.js" %}"></script>
+  <script src="{% static "bower_components\moment\moment.js" %}"></script>
+
+  <script src="{% static "js\publicApp\publicApp.js" %}"></script>
+  <script src="{% static "js\publicApp\publicApp_en.js" %}"></script>
+  <script src="{% static "js\common\boot.js" %}"></script>
+
+  <script src="{% static "js\scaffolding\scaffolding.js" %}"></script>
+  <script src="{% static "js\scaffolding\scaffolding_en.js" %}"></script>
+  <script src="{% static "js\scaffolding\directives\datatable\datatableCtrl.js" %}"></script>
+  <script src="{% static "js\scaffolding\directives\datatable\columnDirective.js" %}"></script>
+  <script src="{% static "js\scaffolding\directives\datatable\datatableDirective.js" %}"></script>
+  <script src="{% static "js\scaffolding\directives\formReadonly\formReadonlyDirective.js" %}"></script>
+  <script src="{% static "js\scaffolding\directives\button\buttonDirective.js" %}"></script>
+  <script src="{% static "js\scaffolding\directives\validate\validateDirective.js" %}"></script>
+  <script src="{% static "js\scaffolding\directives\sref\srefDirective.js" %}"></script>
+  <script src="{% static "js\scaffolding\directives\validationError\validationErrorDirective.js" %}"></script>
+  <script src="{% static "js\scaffolding\directives\field\fieldDirective.js" %}"></script>
+  <script src="{% static "js\scaffolding\directives\text\textDirective.js" %}"></script>
+  <script src="{% static "js\scaffolding\directives\nomenclature\nomenclatureDirective.js" %}"></script>
+  <script src="{% static "js\scaffolding\directives\click\clickDirective.js" %}"></script>
+  <script src="{% static "js\scaffolding\resources\nomenclatures.js" %}"></script>
+  <script src="{% static "js\scaffolding\providers\scModalProvider.js" %}"></script>
+  <script src="{% static "js\scaffolding\providers\scaffoldingProvider.js" %}"></script>
+
+  <script src="{% static "js\common\common.js" %}"></script>
+  <script src="{% static "js\common\common_en.js" %}"></script>
+  <script src="{% static "js\common\forms\partnerDataCtrl.js" %}"></script>
+  <script src="{% static "js\common\modals\changePasswordModalCtrl.js" %}"></script>
+
+  <script src="{% static "js\publicApp\main.js" %}"></script>
+  <script src="{% static "js\publicApp\main_en.js" %}"></script>
+  <script src="{% static "js\publicApp\root\views\rootCtrl.js" %}"></script>
+  <script src="{% static "js\publicApp\account\views\accountEditCtrl.js" %}"></script>
+</body>
+</html>

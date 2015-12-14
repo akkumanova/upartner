@@ -5,4 +5,7 @@ from django.shortcuts import render
 @login_required
 @require_GET
 def home_view(request):
-    return render(request, 'private_home_view.html')
+    template = ('private_home_view.html'
+                if request.user.is_staff
+                else 'public_home_view.html')
+    return render(request, template)

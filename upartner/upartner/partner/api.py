@@ -1,13 +1,16 @@
 from django.http import Http404
+from django.core.exceptions import SuspiciousOperation
 
 from rest_framework.response import Response
 from rest_framework import viewsets
 from rest_framework import status
-from rest_framework.decorators import detail_route
+from rest_framework.decorators import detail_route, list_route, permission_classes
 
 from .models import Partner
 from .threads import EmailThread
+from upartner.core.permissions import IsStaffPermission
 
+@permission_classes((IsStaffPermission, ))
 class PartnerViewSet(viewsets.ViewSet):
     queryset = Partner.objects.all()
 
@@ -101,5 +104,44 @@ class PartnerViewSet(viewsets.ViewSet):
 
             mail_thread.start()
             mail_thread.run()
+
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
+class PartnerAccountViewSet(viewsets.ViewSet):
+    queryset = Partner.objects.all()
+
+    def get_object(self, pk):
+        try:
+            partner = Partner.objects.get(user__pk=pk)
+
+            return partner
+        except Partner.DoesNotExist:
+            raise SuspiciousOperation()
+
+    @list_route(methods=['get'])
+    def data(self, request):
+        partner = self.get_object(request.user.pk)
+
+        data = {
+            'id': partner.pk,
+            'username': partner.user.username,
+            'firstName': partner.user.first_name,
+            'lastName': partner.user.last_name,
+            'email': partner.user.email,
+            'isActive': partner.user.is_active,
+            'countryId': partner.country_id,
+            'checkResult': partner.check_result
+        }
+        return Response(data)
+
+    @list_route(methods=['put'])
+    def updatedata(self, request):
+        partner = self.get_object(request.user.pk)
+
+        partner.set_data(
+            request.data.get('firstName'),
+            request.data.get('lastName'),
+            request.data.get('email'),
+            request.data.get('countryId'))
 
         return Response(status=status.HTTP_204_NO_CONTENT)
