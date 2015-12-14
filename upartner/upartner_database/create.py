@@ -1,9 +1,17 @@
+#!/usr/bin/python
+
 import os
+import sys
 from subprocess import Popen
 
 create_files = {
-    'nt': 'create_all.bat'
+    'win32': 'create_all.bat',
+    'linux2': 'create_all.sh'
 }
 
-p = Popen(create_files[os.name])
+file = create_files.get(os.platform, None)
+if file is None:
+    sys.exit('Unsupported os. Switch to Linux or Windows.')
+
+p = Popen(file)
 p.communicate()
