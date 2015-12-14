@@ -21,7 +21,7 @@ router = routers.DefaultRouter()
 #router.register(r'^partners$', PartnerList, base_name='partners')
 
 urlpatterns += [
-    url(r'^api/partners/$'                              , PartnerList.as_view()  ),
+    url(r'^api/partners$'                               , PartnerList.as_view()  ),
     url(r'^api/partners/(?P<id>[0-9]+)$'                , PartnerDetail.as_view()),
     url(r'^api/users/current$'                          , CurrUserData.as_view() ),
     url(r'^api/nomenclatures/countries$'                , CountryList.as_view()  ),

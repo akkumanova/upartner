@@ -8,6 +8,8 @@
   </div>
 </div>
 
+<sc-button name="newPartnerBtn" btn-sref="{ state: 'root.partners.new' }" text="partners_search_new"
+           class="btn btn-sm btn-primary pull-left" icon="glyphicon-floppy-disk"></sc-button>
 <sc-datatable items="partners" filterable="true" pageable="true" sortable="true" dynamic-columns="true">
   <sc-column sortable="false" class="buttons-cell" has-content="true">
     <sc-button name="viewButton" btn-sref="{state: 'root.partners.edit', params: { id: item.id }}" class="btn btn-xs btn-primary" icon="glyphicon-pencil"></sc-button>

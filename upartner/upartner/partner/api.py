@@ -1,6 +1,5 @@
 from django.http import Http404
 
-from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
@@ -23,7 +22,7 @@ class PartnerList(APIView):
             partners = partners.filter(user__last_name__icontains=last_name)
 
         result = map((lambda u: {
-            'id': u.id,
+            'id': u.pk,
             'username': u.user.username,
             'firstName': u.user.first_name,
             'lastName': u.user.last_name,
@@ -36,6 +35,18 @@ class PartnerList(APIView):
 
         return Response(result)
 
+    def post(self, request):
+        partner = Partner.create(
+            username=request.data.get('username'),
+            first_name=request.data.get('firstName'),
+            last_name=request.data.get('lastName'),
+            email=request.data.get('email'),
+            country_id=request.data.get('countryId'))
+
+        partner.save()
+
+        return Response({'id': partner.pk}, status=status.HTTP_201_CREATED)
+
 
 class PartnerDetail(APIView):
     """
@@ -43,20 +54,33 @@ class PartnerDetail(APIView):
     """
     def get_object(self, pk):
         try:
-            return Partner.objects.get(id=pk)
+            return Partner.objects.get(pk=pk)
         except Partner.DoesNotExist:
             raise Http404
 
     def get(self, request, id):
         partner = self.get_object(id)
 
-        return Response(partner.get_data())
+        data = {
+            'id': partner.pk,
+            'username': partner.user.username,
+            'firstName': partner.user.first_name,
+            'lastName': partner.user.last_name,
+            'email': partner.user.email,
+            'isActive': partner.user.is_active,
+            'countryId': partner.country_id,
+            'checkResult': partner.check_result
+        }
+        return Response(data)
 
     def put(self, request, id):
         partner = self.get_object(id)
 
-        partner.set_data(request.data)
-        partner.user.save()
-        partner.save()
+        partner.set_data(
+            request.data.get('firstName'),
+            request.data.get('lastName'),
+            request.data.get('email'),
+            request.data.get('countryId'))
 
-        return Response(status=status.HTTP_200_OK)
+        return Response(status=status.HTTP_204_NO_CONTENT)
+

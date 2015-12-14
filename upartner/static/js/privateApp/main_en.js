@@ -12,6 +12,7 @@
 
       //partners_search
       partners_search_search: 'Search',
+      partners_search_new: 'New partner',
       partners_search_username: 'Username',
       partners_search_firstName: 'First name',
       partners_search_lastName: 'Last name',
@@ -26,8 +27,12 @@
       partners_edit_edit: 'Edit',
       partners_edit_save: 'Save',
       partners_edit_cancel: 'Cancel',
-      partners_edit_deactivate: 'Deactivate'
+      partners_edit_deactivate: 'Deactivate',
 
+      //partners_new
+      partners_new_title: 'New partner',
+      partners_new_save: 'Save',
+      partners_new_cancel: 'Cancel'
     });
   }]);
 }(angular));

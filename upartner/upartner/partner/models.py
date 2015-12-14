@@ -1,11 +1,15 @@
+from datetime import datetime
+
 from django.db import models
 from django.conf import settings
+from django.contrib.auth.models import User
 
 from upartner.nomenclature.models import Country
 
-class Partner(models.Model):
-    id = models.AutoField(primary_key=True)
+import random
+import string
 
+class Partner(models.Model):
     user = models.OneToOneField(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
@@ -22,31 +26,48 @@ class Partner(models.Model):
     CHECK_RESULT_CHOICES = (
         (CLEAN           , 'Clean'              ),
         (DOCS_DISCREPANCY, 'Discrepancy in docs'),
-        (FAKE_DOCS, 'Fake documents'),
+        (FAKE_DOCS       , 'Fake documents'     ),
     )
     check_result = models.CharField(
         max_length=2,
         choices=CHECK_RESULT_CHOICES,
         default=FAKE_DOCS)
 
-    def get_data(self):
-        return {
-            'id': self.id,
-            'userId': self.user.id,
-            'username': self.user.username,
-            'firstName': self.user.first_name,
-            'lastName': self.user.last_name,
-            'email': self.user.email,
-            'isActive': self.user.is_active,
-            'countryId': self.country_id,
-            'checkResult': self.check_result
-        }
+    @classmethod
+    def _generate_password(cls):
+        allowed = string.ascii_uppercase + string.digits + string.ascii_lowercase
 
-    def set_data(self, dict):
-        self.user.first_name = dict.get('firstName')
-        self.user.last_name = dict.get('lastName')
-        self.user.email = dict.get('email')
-        self.country_id = dict.get('countryId')
+        return ''.join(random.SystemRandom().choice(allowed) for _ in range(settings.PASSWORD_LENGTH))
+
+    @classmethod
+    def create(cls, username, first_name, last_name, email, country_id):
+        currDate=datetime.utcnow()
+
+        user = User(
+            username=username,
+            first_name=first_name,
+            last_name=last_name,
+            email=email,
+            last_login=currDate,
+            is_staff=False,
+            is_superuser=False,
+            is_active=False,
+            date_joined=currDate,
+        )
+        user.set_password(cls._generate_password())
+        user.save()
+
+        partner = cls(country_id=country_id, check_result=None, user=user)
+        return partner
+
+    def set_data(self, first_name, last_name, email, country_id):
+        self.user.first_name = first_name
+        self.user.last_name = last_name
+        self.user.email = email
+        self.user.save()
+
+        self.country_id = country_id
+        self.save()
 
     class Meta:
         db_table = 'uber_partners'

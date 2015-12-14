@@ -9,7 +9,8 @@
   ]).config(['scaffoldingProvider', function (scaffoldingProvider) {
     scaffoldingProvider.form({
       name: 'ubPartnerData',
-      templateUrl: 'static/js/common/forms/partnerData.html'
+      templateUrl: 'static/js/common/forms/partnerData.html',
+      controller: 'PartnerDataCtrl'
     });
   }]);
 }(angular));
