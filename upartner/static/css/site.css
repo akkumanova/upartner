@@ -21,8 +21,20 @@ body{
 }
 
 .navigation a {
-  cursor: pointer;
+  	cursor: pointer;
 }
+.navbar-nav > li a {
+	color: #777777;
+	text-decoration: none;
+}
+
+.navbar-nav > li > .btn-group {
+	display: block;
+	cursor: pointer;
+	padding-top: 15px;
+	padding-bottom: 15px;
+}
+
 a.profile_links{
 	font-size: 11px;
 	color: #777777;

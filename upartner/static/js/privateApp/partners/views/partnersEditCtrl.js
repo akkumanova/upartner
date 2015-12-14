@@ -8,7 +8,6 @@
     $stateParams,
     $http,
     csrfToken,
-    Partner,
     partner
   ) {
     $scope.editMode = null;
@@ -65,9 +64,14 @@
     };
 
     $scope.deactivate = function () {
-      return Partner.deactivate({
-        id: $stateParams.id
-      }, $scope.partner).$promise.then(function () {
+      return $http({
+        method: 'POST',
+        url: 'api/partners/' + $stateParams.id + '/deactivate/',
+        headers: {
+         'X-CSRFToken': csrfToken.get()
+        },
+        data: {}
+      }).then(function () {
         return $state.go($state.current, {
           id:  $stateParams.id
         }, {
@@ -83,7 +87,6 @@
     '$stateParams',
     '$http',
     'csrfToken',
-    'Partner',
     'partner'
   ];
 

@@ -82,7 +82,7 @@ class Partner(models.Model):
     def activate(self):
         if self.user.is_active:
             raise ValidationError(
-                _('Partmer %(pk) is already active.'),
+                _('Partner %(pk) is already active.'),
                 code='invalid',
                 params={'pk': self.pk},
             )
@@ -93,6 +93,17 @@ class Partner(models.Model):
         self.is_activated=True
         self.password=None
         self.save()
+
+    def deactivate(self):
+        if not self.user.is_active:
+            raise ValidationError(
+                _('Partner %(pk) is not active.'),
+                code='invalid',
+                params={'pk': self.pk},
+            )
+
+        self.user.is_active=False
+        self.user.save()
 
     class Meta:
         db_table = 'uber_partners'

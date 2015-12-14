@@ -107,6 +107,13 @@ class PartnerViewSet(viewsets.ViewSet):
 
         return Response(status=status.HTTP_204_NO_CONTENT)
 
+    @detail_route(methods=['post'])
+    def deactivate(self, request, pk=None, format=None, **kwargs):
+        partner = self.get_object(pk)
+        partner.deactivate()
+
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
 class PartnerAccountViewSet(viewsets.ViewSet):
     queryset = Partner.objects.all()
 
