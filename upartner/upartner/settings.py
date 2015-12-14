@@ -146,3 +146,8 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.IsAuthenticated'
     ]
 }
+
+# Email settings
+
+EMAIL_HOST = 'localhost'
+EMAIL_PORT = 1025

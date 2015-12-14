@@ -13,7 +13,7 @@
         if ($scope.newPartner.$valid) {
           $http({
             method: 'POST',
-            url: 'api/partners',
+            url: 'api/partners/',
             headers: {
              'X-CSRFToken': csrfToken.get()
             },

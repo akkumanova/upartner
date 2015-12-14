@@ -3,7 +3,7 @@ from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
 from rest_framework import routers
 
-from upartner.partner.api import PartnerList, PartnerDetail
+from upartner.partner.api import PartnerViewSet# PartnerList, PartnerDetail
 from upartner.user.api import  CurrUserData
 from upartner.nomenclature.api import CountryList, CountryDetail
 
@@ -18,13 +18,13 @@ urlpatterns = [
 urlpatterns += staticfiles_urlpatterns()
 
 router = routers.DefaultRouter()
-#router.register(r'^partners$', PartnerList, base_name='partners')
+router.register(r'api/partners', PartnerViewSet)
+
+urlpatterns += router.urls
 
 urlpatterns += [
-    url(r'^api/partners$'                               , PartnerList.as_view()  ),
-    url(r'^api/partners/(?P<id>[0-9]+)$'                , PartnerDetail.as_view()),
-    url(r'^api/users/current$'                          , CurrUserData.as_view() ),
-    url(r'^api/nomenclatures/countries$'                , CountryList.as_view()  ),
-    url(r'^api/nomenclatures/countries/(?P<id>[0-9]+)$' , CountryDetail.as_view()),
-    url(r'^api-auth/'                , include('rest_framework.urls', namespace='rest_framework'))
+     url(r'^api/users/current$'                           , CurrUserData.as_view() ),
+     url(r'^api/nomenclatures/countries$'                 , CountryList.as_view()  ),
+     url(r'^api/nomenclatures/countries/(?P<id>[0-9]+)$'  , CountryDetail.as_view()),
+     url(r'^api-auth/'                , include('rest_framework.urls', namespace='rest_framework'))
 ]

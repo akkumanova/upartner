@@ -23,7 +23,7 @@
         if ($scope.editPartners.$valid) {
           $http({
             method: 'PUT',
-            url: 'api/partners/' + $stateParams.id,
+            url: 'api/partners/' + $stateParams.id + '/',
             headers: {
              'X-CSRFToken': csrfToken.get()
             },
@@ -48,9 +48,14 @@
     };
 
     $scope.activate = function () {
-      return Partner.activate({
-        id: $stateParams.id
-      }, $scope.partner).$promise.then(function () {
+      return $http({
+        method: 'POST',
+        url: 'api/partners/' + $stateParams.id + '/activate/',
+        headers: {
+         'X-CSRFToken': csrfToken.get()
+        },
+        data: {}
+      }).then(function () {
         return $state.go($state.current, {
           id:  $stateParams.id
         }, {

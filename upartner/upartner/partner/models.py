@@ -1,5 +1,6 @@
 from datetime import datetime
 
+from django.core.exceptions import ValidationError
 from django.db import models
 from django.conf import settings
 from django.contrib.auth.models import User
@@ -19,6 +20,8 @@ class Partner(models.Model):
         related_name='partner')
 
     country = models.OneToOneField(Country, verbose_name="country")
+    password = models.CharField(max_length=10)
+    is_activated = models.BooleanField()
 
     CLEAN = 'cl'
     DOCS_DISCREPANCY = 'dd'
@@ -54,10 +57,17 @@ class Partner(models.Model):
             is_active=False,
             date_joined=currDate,
         )
-        user.set_password(cls._generate_password())
+
+        user_password = cls._generate_password()
+        user.set_password(user_password)
         user.save()
 
-        partner = cls(country_id=country_id, check_result=None, user=user)
+        partner = cls(
+            country_id=country_id,
+            check_result=None,
+            password=user_password,
+            is_activated=False,
+            user=user)
         return partner
 
     def set_data(self, first_name, last_name, email, country_id):
@@ -67,6 +77,21 @@ class Partner(models.Model):
         self.user.save()
 
         self.country_id = country_id
+        self.save()
+
+    def activate(self):
+        if self.user.is_active:
+            raise ValidationError(
+                _('Partmer %(pk) is already active.'),
+                code='invalid',
+                params={'pk': self.pk},
+            )
+
+        self.user.is_active=True
+        self.user.save()
+
+        self.is_activated=True
+        self.password=None
         self.save()
 
     class Meta:

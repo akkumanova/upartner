@@ -1,17 +1,24 @@
 from django.http import Http404
 
-from rest_framework.views import APIView
 from rest_framework.response import Response
+from rest_framework import viewsets
 from rest_framework import status
+from rest_framework.decorators import detail_route
 
 from .models import Partner
+from .threads import EmailThread
 
-class PartnerList(APIView):
-    """
-    List all partners, or create a new partner.
-    """
-    def get(self, request):
-        partners = Partner.objects.all();
+class PartnerViewSet(viewsets.ViewSet):
+    queryset = Partner.objects.all()
+
+    def get_object(self, pk):
+        try:
+            return Partner.objects.get(pk=pk)
+        except Partner.DoesNotExist:
+            raise Http404
+
+    def list(self, request):
+        partners = Partner.objects.all()
 
         first_name = self.request.query_params.get('firstName', None)
         last_name = self.request.query_params.get('lastName', None)
@@ -35,7 +42,7 @@ class PartnerList(APIView):
 
         return Response(result)
 
-    def post(self, request):
+    def create(self, request):
         partner = Partner.create(
             username=request.data.get('username'),
             first_name=request.data.get('firstName'),
@@ -47,19 +54,8 @@ class PartnerList(APIView):
 
         return Response({'id': partner.pk}, status=status.HTTP_201_CREATED)
 
-
-class PartnerDetail(APIView):
-    """
-    Retrieve, update or delete partners.
-    """
-    def get_object(self, pk):
-        try:
-            return Partner.objects.get(pk=pk)
-        except Partner.DoesNotExist:
-            raise Http404
-
-    def get(self, request, id):
-        partner = self.get_object(id)
+    def retrieve(self, request, pk=None):
+        partner = self.get_object(pk)
 
         data = {
             'id': partner.pk,
@@ -73,8 +69,8 @@ class PartnerDetail(APIView):
         }
         return Response(data)
 
-    def put(self, request, id):
-        partner = self.get_object(id)
+    def update(self, request, pk=None):
+        partner = self.get_object(pk)
 
         partner.set_data(
             request.data.get('firstName'),
@@ -84,3 +80,26 @@ class PartnerDetail(APIView):
 
         return Response(status=status.HTTP_204_NO_CONTENT)
 
+    @detail_route(methods=['post'])
+    def activate(self, request, pk=None, format=None, **kwargs):
+        partner = self.get_object(pk)
+        is_first_activation = not partner.is_activated
+        password = partner.password
+
+        partner.activate()
+
+        if is_first_activation:
+            content = ('<h1>Congratulations, you are now an official Uber partner</h1>'
+                '<p>Your account is registered with username %s and password %s'
+                '(for security reasons, please be sure to change this password as soon as posible).</p>'
+                '<p>The Uber team</p>') % (partner.user.username, password)
+
+            mail_thread = EmailThread(
+                partner.user.email,
+                'Uber partner',
+                content)
+
+            mail_thread.start()
+            mail_thread.run()
+
+        return Response(status=status.HTTP_204_NO_CONTENT)
