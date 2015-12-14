@@ -1,0 +1,41 @@
+<ng-form name="form.choosePartnersForm" sc-validate="{}" sc-form-readonly="true">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <strong class="heading">{{ 'modals_choosePartners_title' | trans }}</strong>
+      <div class="pull-right">
+        <sc-button name="okBtn" btn-click="ok()" text="modals_choosePartners_continue" class="btn btn-primary btn-xs" icon="glyphicon-ok">
+        </sc-button>
+        <sc-button name="cancelBtn" btn-click="cancel()" text="modals_choosePartners_cancel" class="btn btn-default btn-xs" icon="glyphicon-ban-circle">
+        </sc-button>
+      </div>
+    </div>
+
+    <div class="panel-body">
+      <div class="row">
+        <sc-field type="nomenclature" alias="'countries'" mode="id" ng-model="filters.countryId" l10n-text="modals_choosePartners_country" class="col-sm-4"></sc-field>
+        <div class="labeless col-sm-8">
+          <sc-button name="seachBtn" btn-click="search()" text="modals_choosePartners_search" class="btn btn-default btn-sm pull-right" icon="glyphicon-search"></sc-button>
+        </div>
+      </div>
+
+      <sc-datatable items="partners" filterable="true" pageable="true" sortable="true" dynamic-columns="true" row-class="{ 'warning': item.isChosen }">
+        <sc-column sortable="false" class="buttons-cell" has-content="true">
+          <sc-button name="chooseButton" btn-click="choosePartner(item)" ng-show="!item.isChosen" class="btn btn-primary btn-xs" icon="glyphicon glyphicon-ok"></sc-button>
+          <sc-button name="removeButton" btn-click="removePartner(item)" ng-show="item.isChosen" class="btn btn-danger btn-xs" icon="glyphicon glyphicon-remove"></sc-button>
+        </sc-column>
+        <sc-column data="firstName" title="modals_choosePartners_firstName">
+        </sc-column>
+        <sc-column data="lastName" title="modals_choosePartners_lastName">
+        </sc-column>
+        <sc-column data="username" title="modals_choosePartners_username" visible="false">
+        </sc-column>
+        <sc-column data="email" title="modals_choosePartners_email">
+        </sc-column>
+        <sc-column data="country" title="modals_choosePartners_country">
+        </sc-column>
+        <sc-column data="isActive" title="modals_choosePartners_isActive" type="boolean">
+        </sc-column>
+      </sc-datatable>
+    </div>
+  </div>
+</ng-form>

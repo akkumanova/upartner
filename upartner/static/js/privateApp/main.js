@@ -8,7 +8,10 @@
     'ui.bootstrap',
     'scaffolding',
     'l10n'
-  ]).config(['$stateProvider', function ($stateProvider) {
+  ]).config(['scModalProvider', function (scModalProvider) {
+    scModalProvider
+     .modal('choosePartnersModal', 'static/js/privateApp/partners/modals/choosePartnersModal.html', 'ChoosePartnersModalCtrl', 'xlg');
+  }]).config(['$stateProvider', function ($stateProvider) {
     $stateProvider
         .state(['root'                , null        , ['@'    , 'static/js/privateApp/root/views/root.html'              , 'RootCtrl'          ]])
         .state(['root.partners'       , '/partners?firstName&lastName'                                                                          ])

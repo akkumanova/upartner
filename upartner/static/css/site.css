@@ -59,6 +59,44 @@ div.labeless
 	margin-bottom: 10px;
 }
 
+/* modals */
+@media (min-width: 768px) {
+  .xlg-modal > .modal-dialog  {
+    width: 740px;
+  }
+  .xs-modal > .modal-dialog  {
+    width: 400px;
+  }
+
+  .md-modal > .modal-dialog  {
+    width: 600px;
+  }
+}
+
+@media (min-width: 992px) {
+  .xlg-modal > .modal-dialog  {
+    width: 960px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .xlg-modal > .modal-dialog {
+    width: 1160px;
+  }
+
+ .lg-modal > .modal-dialog  {
+    width: 825px;
+  }
+}
+
+.xlg-modal .modal-content .panel, .xs-modal .modal-content .panel, .md-modal .modal-content .panel, .lg-modal .modal-content .panel {
+    margin: 5px;
+}
+
+.modal-backdrop.in {
+    opacity: 0.8;
+}
+
 /* sc-datatable */
 table.sc-data-table th.sorting
 {
@@ -119,7 +157,7 @@ select.select2-choice{
 	padding: 0px;
 }
 .select2-container.input-sm a.select2-choice{
-	height: auto;
+	height: 30px;
 	min-height: 26px;
 	padding-top: 1px;
 	padding-bottom: 1px;

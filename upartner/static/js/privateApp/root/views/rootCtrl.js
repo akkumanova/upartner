@@ -42,6 +42,10 @@
       return modalInstance.opened;
     };
 
+    $scope.exportPartners = function () {
+      return scModal.open('choosePartnersModal').opened;
+    };
+
     $scope.alerts = [];
     $scope.removeAlert = function (alert) {
       var index = $scope.alerts.indexOf(alert);

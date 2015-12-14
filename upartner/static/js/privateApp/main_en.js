@@ -34,7 +34,19 @@
       //partners_new
       partners_new_title: 'New partner',
       partners_new_save: 'Save',
-      partners_new_cancel: 'Cancel'
+      partners_new_cancel: 'Cancel',
+
+      //modals_choosePartners
+      modals_choosePartners_title: 'Choose partners to export',
+      modals_choosePartners_continue: 'Continue',
+      modals_choosePartners_cancel: 'Cancel',
+      modals_choosePartners_country: 'Country',
+      modals_choosePartners_search: 'Search',
+      modals_choosePartners_username: 'Username',
+      modals_choosePartners_firstName: 'First name',
+      modals_choosePartners_lastName: 'Last name',
+      modals_choosePartners_email: 'Email',
+      modals_choosePartners_isActive: 'Is active'
     });
   }]);
 }(angular));

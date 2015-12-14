@@ -20,18 +20,22 @@ class PartnerViewSet(viewsets.ViewSet):
         except Partner.DoesNotExist:
             raise Http404
 
-    def list(self, request):
+    def get_list(self, first_name=None, last_name=None, country_id=None, not_checked_only=False):
         partners = Partner.objects.all()
 
-        first_name = self.request.query_params.get('firstName', None)
-        last_name = self.request.query_params.get('lastName', None)
         if first_name is not None:
             partners = partners.filter(user__first_name__icontains=first_name)
 
         if last_name is not None:
             partners = partners.filter(user__last_name__icontains=last_name)
 
-        result = map((lambda u: {
+        if country_id is not None:
+            partners = partners.filter(country__pk=country_id)
+
+        if not_checked_only:
+            partners = partners.filter(check_result=None)
+
+        return map((lambda u: {
             'id': u.pk,
             'username': u.user.username,
             'firstName': u.user.first_name,
@@ -42,6 +46,20 @@ class PartnerViewSet(viewsets.ViewSet):
             'checkResult': u.check_result
 
         }), list(partners))
+
+    def list(self, request):
+        first_name = self.request.query_params.get('firstName', None)
+        last_name = self.request.query_params.get('lastName', None)
+
+        result = self.get_list(first_name=first_name,last_name=last_name)
+
+        return Response(result)
+
+    @list_route(methods=['get'])
+    def forexport(self, request):
+        country_id = self.request.query_params.get('countryId', None)
+
+        result = self.get_list(country_id=country_id, not_checked_only=True)
 
         return Response(result)
 
