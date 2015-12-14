@@ -8,8 +8,7 @@
     'ui.bootstrap',
     'scaffolding',
     'l10n'
-  ]).config(['scaffoldingProvider', function (scaffoldingProvider) {
-  }]).config(['$stateProvider', function ($stateProvider) {
+  ]).config(['$stateProvider', function ($stateProvider) {
     $stateProvider
         .state(['root'                , null        , ['@'    , 'static/js/privateApp/root/views/root.html'              , 'RootCtrl'          ]])
         .state(['root.partners'       , '/partners?firstName&lastName'                                                                          ])

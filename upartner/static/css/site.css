@@ -23,14 +23,16 @@ body{
 .navigation a {
   cursor: pointer;
 }
+a.profile_links{
+	font-size: 11px;
+	color: #777777;
+	margin-left: 3px;
+	cursor: pointer;
+}
 
 div.labeless
 {
   margin-top: 25px;
-}
-
-.breadcrumb a {
-  cursor: pointer;
 }
 
 .well-sm{

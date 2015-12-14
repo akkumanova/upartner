@@ -5,6 +5,8 @@
     l10n.add('en', {
       //navigation
       navigation_partners: 'Partners',
+      navigation_partners_importChecks: 'Import checks',
+      navigation_partners_exportPartners: 'Export partners',
 
       //common_navigation
       navigation_logout: 'Exit',

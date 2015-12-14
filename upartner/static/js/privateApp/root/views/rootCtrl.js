@@ -2,7 +2,15 @@
 (function (angular) {
   'use strict';
 
-  function RootCtrl($scope, $timeout, $http, $sce) {
+  function RootCtrl(
+    $scope,
+    $window,
+    $timeout,
+    $http,
+    $sce,
+    scModal,
+    csrfToken
+  ) {
     $http({
       method: 'GET',
       url: 'api/users/current'
@@ -10,6 +18,29 @@
       $scope.userFullname = result.data.firstName + ' ' +
        result.data.lastName;
     });
+
+    $scope.logout = function logout() {
+      return $http({
+        method: 'POST',
+        url: 'api/users/logout/',
+        headers: {
+         'X-CSRFToken': csrfToken.get()
+        },
+        data: {}
+      }).then(function (result) {
+        $window.location.reload();
+      });
+    };
+
+    $scope.changePassword = function changePassword() {
+      var modalInstance = scModal.open('changePassword');
+
+      modalInstance.result.then(function () {
+        $window.location.reload();
+      });
+
+      return modalInstance.opened;
+    };
 
     $scope.alerts = [];
     $scope.removeAlert = function (alert) {
@@ -35,7 +66,15 @@
     });
   }
 
-  RootCtrl.$inject = ['$scope', '$timeout', '$http', '$sce'];
+  RootCtrl.$inject = [
+    '$scope',
+    '$window',
+    '$timeout',
+    '$http',
+    '$sce',
+    'scModal',
+    'csrfToken'
+  ];
 
   RootCtrl.$resolve = {};
 

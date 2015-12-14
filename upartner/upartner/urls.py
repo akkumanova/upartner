@@ -3,8 +3,8 @@ from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
 from rest_framework import routers
 
-from upartner.partner.api import PartnerViewSet# PartnerList, PartnerDetail
-from upartner.user.api import  CurrUserData
+from upartner.partner.api import PartnerViewSet
+from upartner.user.api import  UserViewSet
 from upartner.nomenclature.api import CountryList, CountryDetail
 
 import upartner.user.urls
@@ -19,11 +19,11 @@ urlpatterns += staticfiles_urlpatterns()
 
 router = routers.DefaultRouter()
 router.register(r'api/partners', PartnerViewSet)
+router.register(r'api/users'   , UserViewSet   )
 
 urlpatterns += router.urls
 
 urlpatterns += [
-     url(r'^api/users/current$'                           , CurrUserData.as_view() ),
      url(r'^api/nomenclatures/countries$'                 , CountryList.as_view()  ),
      url(r'^api/nomenclatures/countries/(?P<id>[0-9]+)$'  , CountryDetail.as_view()),
      url(r'^api-auth/'                , include('rest_framework.urls', namespace='rest_framework'))

@@ -6,7 +6,10 @@
     'ui.bootstrap',
     'scaffolding',
     'l10n'
-  ]).config(['scaffoldingProvider', function (scaffoldingProvider) {
+  ]).config(['scModalProvider', function (scModalProvider) {
+    scModalProvider
+     .modal('changePassword', 'static/js/common/modals/changePasswordModal.html', 'ChangePasswordModalCtrl', 'xsm');
+  }]).config(['scaffoldingProvider', function (scaffoldingProvider) {
     scaffoldingProvider.form({
       name: 'ubPartnerData',
       templateUrl: 'static/js/common/forms/partnerData.html',
