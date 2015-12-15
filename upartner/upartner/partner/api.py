@@ -43,7 +43,7 @@ class PartnerViewSet(viewsets.ViewSet):
             'email': u.user.email,
             'country': u.country.name,
             'isActive': u.user.is_active,
-            'checkResult': u.check_result
+            'checkResult': u.get_check_result_display()
 
         }), list(partners))
 
@@ -86,7 +86,7 @@ class PartnerViewSet(viewsets.ViewSet):
             'email': partner.user.email,
             'isActive': partner.user.is_active,
             'countryId': partner.country_id,
-            'checkResult': partner.check_result
+            'checkResult': partner.get_check_result_display()
         }
         return Response(data)
 
