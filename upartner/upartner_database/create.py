@@ -5,11 +5,11 @@ import sys
 from subprocess import Popen
 
 create_files = {
-    'win32': 'create_all.bat',
-    'linux2': 'create_all.sh'
+    'nt': 'create_all.bat',
+    'posix': 'create_all.sh'
 }
 
-file = create_files.get(os.platform, None)
+file = create_files.get(os.name, None)
 if file is None:
     sys.exit('Unsupported os. Switch to Linux or Windows.')
 
