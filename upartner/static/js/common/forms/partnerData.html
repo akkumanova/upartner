@@ -1,6 +1,6 @@
 <ng-form sc-validate="{}" sc-form-readonly>
   <div class="row">
-    <sc-field type="text" ng-model="model.username" ng-readonly="!isNew" ng-required="true" l10n-text="forms_partnerData_username" class="col-sm-4 col-md-3"></sc-field>
+    <sc-field type="text" ng-model="model.username" ng-readonly="!isNew" ng-required="true" sc-validate="{ usernameUnique: usernameUnique }" validations="{ usernameUnique: 'forms_partnerData_usernameUnique' }" l10n-text="forms_partnerData_username" class="col-sm-4 col-md-3"></sc-field>
     <sc-field type="text" ng-model="model.checkResult" ng-readonly="true" l10n-text="forms_partnerData_checkResult" class="col-sm-4 col-md-3"></sc-field>
   </div>
   <div class="row">

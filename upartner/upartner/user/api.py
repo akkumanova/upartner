@@ -5,7 +5,7 @@ from django.core.exceptions import ValidationError
 from rest_framework import viewsets
 from rest_framework.response import Response
 from rest_framework import status
-from rest_framework.decorators import list_route
+from rest_framework.decorators import list_route, detail_route
 
 class UserViewSet(viewsets.ViewSet):
     queryset = User.objects.all()
@@ -45,3 +45,16 @@ class UserViewSet(viewsets.ViewSet):
 
         logout(request)
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+    @list_route(methods=['get'])
+    def username_unique(self, request):
+        users = User.objects.all()
+
+        username = request.query_params.get('username')
+        users = users.filter(username=username)
+
+        uid = request.query_params.get('id', None)
+        if uid is not None:
+            users = users.exclude(pk=id)
+
+        return Response({'valid': users.count() == 0})

@@ -95,7 +95,7 @@ class CheckFileViewSet(viewsets.ViewSet):
 
             Check.objects.bulk_create(checks)
 
-        return HttpResponse({'id': check_file.pk}, status=status.HTTP_201_CREATED)
+        return Response({'id': check_file.pk}, status=status.HTTP_201_CREATED)
 
     def retrieve(self, request, pk):
         check_file = self.get_object(pk)
