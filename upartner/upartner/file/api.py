@@ -1,5 +1,9 @@
-from django.db import connection
-from django.http import StreamingHttpResponse
+import uuid
+import os
+
+from django.http import Http404, HttpResponse
+from django.db.models import Q
+from django.conf import settings
 
 from rest_framework.response import Response
 from rest_framework import viewsets
@@ -7,42 +11,70 @@ from rest_framework.decorators import permission_classes
 
 from .models import File
 from upartner.core.permissions import IsStaffPermission
-import uuid
-import base64
 
 @permission_classes((IsStaffPermission, ))
 class FileViewSet(viewsets.ViewSet):
     queryset = File.objects.all()
 
-    def create(self, request):
-        cursor = connection.cursor()
+    def get_last_with_name(self, filename, extension):
+        query = File.objects.all() \
+                .filter(Q(filename=filename) & Q(extension=extension)) \
+                .order_by('-order_num') \
+                [:1]
 
-        for _, file in request.FILES.iteritems():
-            file_id = uuid.uuid1()
+        result = list(query)
+        return None if not(result) else result[0]
 
-            cursor.execute("""INSERT INTO uber_files(id, filename)
-                              VALUES ('{}', N'{}');""".format(file_id, str(file.name)))
+    def get_file_path(self, filename, order_num, file_extension):
+        name = '{}_{}.{}'.format(filename, order_num, file_extension)
+        return os.path.join(settings.FILE_DESTINATION, name)
 
-            order_num = 1
+    def get_object(self, pk):
+        try:
+            return File.objects.get(id=pk)
+        except File.DoesNotExist:
+            raise Http404
+
+    def save_file(self, file, path):
+        with open(path, 'wb+') as destination:
             for chunk in file.chunks():
-                query = """INSERT INTO uber_file_chunks(order_num, file_id, content)
-                           VALUES ({}, '{}', '{}');"""
+                destination.write(chunk)
 
-                cursor.execute(query.format(order_num, file_id, base64.b64encode(chunk)))
+    def create(self, request):
+        for _, file in request.FILES.iteritems():
+            filename, extension = os.path.splitext(str(file.name))
+            extension = extension.lstrip('.')
 
-                order_num += 1
+            last_file = self.get_last_with_name(filename, extension)
+            order_num = 0 if last_file is None else last_file.order_num + 1
 
-        return Response({'fileKey': file_id })
+            ufile = File(
+                id=uuid.uuid1(),
+                filename=filename,
+                extension=extension,
+                order_num=order_num,
+                type=file.content_type)
+            ufile.save()
+
+            self.save_file(file, self.get_file_path(filename, order_num, extension))
+
+        return Response({'fileKey': ufile.id})
 
     def retrieve(self, request, pk):
-        cursor = connection.cursor()
+        def read_in_chunks(file, chunk_size=1024):
+            while True:
+                data = file.read(chunk_size)
+                if not data:
+                    break
+                yield data
 
-        selectQuery = """SELECT content FROM uber_file_chunks
-                         WHERE file_id='{}'
-                         ORDER BY order_num;""".format(pk)
-        cursor.execute(selectQuery)
+        ufile = self.get_object(pk)
 
-        file = File.objects.get(id=pk)
-        response = StreamingHttpResponse((line for line in cursor.fetchall()))
-        response['Content-Disposition'] = "attachment; filename={0}".format(file.filename)
+        response = HttpResponse(content_type=ufile.type)
+        response['Content-Disposition'] = 'attachment; filename=%s' % ufile.filename
+
+        with open(self.get_file_path(ufile.filename, ufile.order_num, ufile.extension), 'rb+') as source:
+            for chunk in read_in_chunks(source):
+                response.write(chunk)
+
         return response

@@ -22,6 +22,7 @@ router = routers.DefaultRouter()
 router.register(r'api/partners'         , PartnerViewSet       )
 router.register(r'api/partnerAccounts'  , PartnerAccountViewSet)
 router.register(r'api/partnerInterfaces', PartnerCsvViewSet    )
+router.register(r'api/files'            , FileViewSet          , 'files')
 router.register(r'api/users'            , UserViewSet          )
 
 urlpatterns += router.urls
