@@ -5,7 +5,7 @@
     l10n.add('en', {
       //navigation
       navigation_partners: 'Partners',
-      navigation_partners_importChecks: 'Import checks',
+      navigation_partners_checkFiles: 'Check files',
       navigation_partners_exportPartners: 'Export partners',
 
       //common_navigation
@@ -35,6 +35,18 @@
       partners_new_title: 'New partner',
       partners_new_save: 'Save',
       partners_new_cancel: 'Cancel',
+
+      //checkFiles_search
+      checkFiles_search_new: 'New file',
+      checkFiles_search_dateCreated: 'Date created',
+      checkFiles_search_isImported: 'Is imported',
+      checkFiles_search_dateImported: 'Date imported',
+
+      //checkFiles_new
+      checkFiles_new_title: 'New file',
+      checkFiles_new_save: 'Save',
+      checkFiles_new_cancel: 'Cancel',
+      checkFiles_new_file: 'File',
 
       //modals_choosePartners
       modals_choosePartners_title: 'Choose partners to export',

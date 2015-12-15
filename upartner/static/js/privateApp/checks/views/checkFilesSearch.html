@@ -1,0 +1,13 @@
+<sc-button name="newCheckFileBtn" btn-sref="{ state: 'root.checkFiles.new' }" text="checkFiles_search_new"
+           class="btn btn-sm btn-primary pull-left" icon="glyphicon-floppy-disk"></sc-button>
+<sc-datatable items="checkFiles" filterable="true" pageable="true" sortable="true" dynamic-columns="true">
+  <sc-column sortable="false" class="buttons-cell" has-content="true">
+    <sc-button name="viewButton" btn-sref="{state: 'root.checkFiles.edit', params: { id: item.id }}" class="btn btn-xs btn-primary" icon="glyphicon-pencil"></sc-button>
+  </sc-column>
+  <sc-column data="dateCreated" title="checkFiles_search_dateCreated" type="date">
+  </sc-column>
+  <sc-column data="isImported" title="checkFiles_search_isImported"  type="boolean">
+  </sc-column>
+  <sc-column data="dateImported" title="checkFiles_search_dateImported" type="date">
+  </sc-column>
+</sc-datatable>

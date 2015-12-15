@@ -2,6 +2,9 @@ CREATE TABLE uber_checks
 (
   id            serial       NOT NULL,
   check_file_id int          NOT NULL,
+  id_str        text         NULL,
+  name          text         NULL,
+  result        text         NULL,
   partner_id    int          NULL,
   check_result  check_result NULL,
   is_valid      boolean      NOT NULL,

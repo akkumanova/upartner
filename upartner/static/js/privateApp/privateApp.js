@@ -1,6 +1,3 @@
-/**
- * Created by albs on 13-Dec-15.
- */
 /*global angular, _*/
 (function (angular, _) {
   'use strict';
@@ -50,6 +47,44 @@
       }
     ]);
   }]).config(['$httpProvider', function ($httpProvider) {
+    $httpProvider.interceptors.push([
+      '$q',
+      '$rootScope',
+      function($q, $rootScope) {
+        return {
+          specificallyHandled: function(specificallyHandledBlock) {
+            var specificallyHandleInProgress = true;
+            try {
+              return specificallyHandledBlock();
+            } finally {
+              specificallyHandleInProgress = false;
+            }
+          },
+          responseError: function(rejection) {
+            var shouldHandle = (rejection && rejection.config && rejection.config.headers &&
+            (rejection.statusText || rejection.status == 500));
+
+            if (shouldHandle) {
+              try {
+                var message;
+                if (rejection.status == 500) {
+                  message = 'An error has occurred! Please refresh the page with F5 and try again.';
+                } else {
+                  message = rejection.statusText;
+                }
+
+                $rootScope.$broadcast('alert', message, 'danger');
+              } catch (e) {
+                //swallow all exception so that we don't end up in an infinite loop
+              }
+            }
+
+            return $q.reject(rejection);
+          }
+        };
+      }
+    ]);
+
     $httpProvider.defaults.headers.get = {
       'cache-control': 'no-cache, no-store, must-revalidate',
       Pragma: 'no-cache',

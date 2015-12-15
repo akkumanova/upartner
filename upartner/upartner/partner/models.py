@@ -5,6 +5,7 @@ from django.db import models
 from django.conf import settings
 from django.contrib.auth.models import User
 
+from upartner.core.choices import CheckResultChoice
 from upartner.nomenclature.models import Country
 
 import random
@@ -14,7 +15,6 @@ class Partner(models.Model):
     user = models.OneToOneField(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
-        primary_key=True,
         db_column='user_id',
         verbose_name='partner',
         related_name='partner')
@@ -23,18 +23,10 @@ class Partner(models.Model):
     password = models.CharField(max_length=10)
     is_activated = models.BooleanField()
 
-    CLEAN = 'cl'
-    DOCS_DISCREPANCY = 'dd'
-    FAKE_DOCS = 'fd'
-    CHECK_RESULT_CHOICES = (
-        (CLEAN           , 'Clean'              ),
-        (DOCS_DISCREPANCY, 'Discrepancy in docs'),
-        (FAKE_DOCS       , 'Fake documents'     ),
-    )
     check_result = models.CharField(
         max_length=2,
-        choices=CHECK_RESULT_CHOICES,
-        default=FAKE_DOCS)
+        choices=CheckResultChoice.get_values(),
+        default=None)
 
     @classmethod
     def _generate_password(cls):

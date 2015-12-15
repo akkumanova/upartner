@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     'upartner.core',
     'upartner.nomenclature',
     'upartner.partner',
+    'upartner.check',
     'upartner.file'
 ]
 

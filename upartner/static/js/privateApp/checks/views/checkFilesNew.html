@@ -1,0 +1,25 @@
+<ng-form name="newCheckFile" sc-validate="{}">
+  <div class="panel panel-default">
+    <div class="panel-heading clearfix">
+      <strong class="heading" class="heading">{{ 'checkFiles_new_title' | trans }}</strong>
+      <div class="pull-right">
+        <sc-button name="saveBtn" btn-click="save()" text="checkFiles_new_save" class="btn btn-primary btn-xs"
+                   icon="glyphicon-floppy-disk">
+        </sc-button>
+        <sc-button name="cancelBtn" btn-click="cancel()" text="checkFiles_new_cancel" class="btn btn-default btn-xs"
+                   icon="glyphicon-ban-circle">
+        </sc-button>
+      </div>
+    </div>
+
+    <div class="panel-body">
+      <div class="row">
+        <div class="form-group col-sm-6" sc-has-error="file">
+          <label class="control-label">{{ 'checkFiles_new_file' | trans }}</label>
+          <sc-validation-error field-name="file" validations="{required: 'default'}"></sc-validation-error>
+           <sc-file name="file" ng-model="file" ng-required="true"></sc-file>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-form>

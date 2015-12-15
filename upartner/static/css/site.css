@@ -26,6 +26,7 @@ body{
 .navbar-nav > li a {
 	color: #777777;
 	text-decoration: none;
+    cursor: pointer;
 }
 
 .navbar-nav > li > .btn-group {

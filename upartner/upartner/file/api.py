@@ -3,7 +3,6 @@ import os
 
 from django.http import Http404, HttpResponse
 from django.db.models import Q
-from django.conf import settings
 
 from rest_framework.response import Response
 from rest_framework import viewsets
@@ -24,10 +23,6 @@ class FileViewSet(viewsets.ViewSet):
 
         result = list(query)
         return None if not(result) else result[0]
-
-    def get_file_path(self, filename, order_num, file_extension):
-        name = '{}_{}.{}'.format(filename, order_num, file_extension)
-        return os.path.join(settings.FILE_DESTINATION, name)
 
     def get_object(self, pk):
         try:
@@ -56,7 +51,7 @@ class FileViewSet(viewsets.ViewSet):
                 type=file.content_type)
             ufile.save()
 
-            self.save_file(file, self.get_file_path(filename, order_num, extension))
+            self.save_file(file, ufile.get_file_path())
 
         return Response({'fileKey': ufile.id})
 
@@ -73,7 +68,7 @@ class FileViewSet(viewsets.ViewSet):
         response = HttpResponse(content_type=ufile.type)
         response['Content-Disposition'] = 'attachment; filename=%s' % ufile.filename
 
-        with open(self.get_file_path(ufile.filename, ufile.order_num, ufile.extension), 'rb+') as source:
+        with open(ufile.get_file_path(), 'rb+') as source:
             for chunk in read_in_chunks(source):
                 response.write(chunk)
 

@@ -10,28 +10,22 @@
     <div class="container">
       <ul class="nav navbar-nav main-menu">
         <li>
-          <div class="btn-group">
-            <a name="stateLink" sc-sref="{ state: 'root.partners.search', options: { inherit: false } }">
-              <span class="glyphicon glyphicon-tower"></span>
-              <span>{{ 'navigation_partners'| trans }}</span>
-            </a>
-            <a class="dropdown-toggle">
-              <b class="caret"></b>
-            </a>
-              <ul class="dropdown-menu">
-              <li>
-                <a name="child1Link"
-                   sc-sref="{ state: 'root.partners.search', options: { inherit: false } }">
-                  <span>{{ 'navigation_partners_importChecks' | trans }}</span>
-                </a>
-              </li>
-              <li>
-                <a name="child2Link" sc-click="exportPartners()">
-                  <span>{{ 'navigation_partners_exportPartners' | trans }}</span>
-                </a>
-              </li>
-            </ul>
-          </div>
+          <a name="stateLink" sc-sref="{ state: 'root.partners.search', options: { inherit: false } }">
+            <span class="glyphicon glyphicon-tower"></span>
+            <span>{{ 'navigation_partners' | trans }}</span>
+          </a>
+        </li>
+        <li>
+          <a name="stateLink" sc-click="exportPartners()">
+            <span class="glyphicon glyphicon-download"></span>
+            <span>{{ 'navigation_partners_exportPartners' | trans }}</span>
+          </a>
+        </li>
+        <li>
+          <a name="stateLink" sc-sref="{ state: 'root.checkFiles.search', options: { inherit: false } }">
+            <span class="glyphicon glyphicon-file"></span>
+            <span>{{ 'navigation_partners_checkFiles' | trans }}</span>
+          </a>
         </li>
       </ul>
       <div class="navbar-right" style="margin-top: 3px;">
