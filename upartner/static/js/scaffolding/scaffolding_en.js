@@ -24,6 +24,10 @@
       datatable_yes: 'Yes',
       datatable_no: 'No',
 
+      //file
+      file_noFile: 'No file',
+      file_failAlert: 'An error has occurred. Successfully uploaded files are saved.',
+
       // defaultErrorTexts
       defaultErrorTexts_required: 'Required field',
       defaultErrorTexts_pattern: 'Invalid format',

@@ -7,6 +7,7 @@
     'ui.bootstrap',
     'ui.router',
     'ui.select2',
-    'l10n'
+    'l10n',
+    'ui.jq'
   ]);
 }(angular));

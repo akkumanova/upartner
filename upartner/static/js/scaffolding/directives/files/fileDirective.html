@@ -1,0 +1,19 @@
+﻿<div class="input-group input-group-xs">
+  <div class="form-control input-md" style="position:relative;" ng-disabled="isReadonly">
+    <span ng-hide="file || upload">{{ 'file_noFile' | trans }}</span>
+    <span ng-show="upload">{{percent}}%</span>
+    <a ng-show="file" ng-href="{{file.url}}" target="_blank" title="{{file.name}}"
+       style="position:absolute; text-overflow:ellipsis;white-space: nowrap;display: block;overflow: hidden;width:90%;font-size:16px;top:6px;">
+      {{file.name}}
+    </a>
+  </div>
+  <span class="input-group-btn">
+    <span class="btn btn-default fileinput-button" ng-disabled="isReadonly" ng-hide="file || upload">
+      <i class="glyphicon glyphicon-file"></i>
+      <input type="file" name="files[]" ui-jq="fileupload" ui-options="{ url: uploadUrl, dataType: 'json', add: add, progress: progress, headers: headers }">
+    </span>
+    <span class="btn btn-default" ng-disabled="isReadonly" ng-if="file || upload" sc-click="remove()">
+      <i class="glyphicon glyphicon-remove"></i>
+    </span>
+  </span>
+</div>

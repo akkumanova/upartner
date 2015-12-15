@@ -1,15 +1,15 @@
 from django.conf.urls import include, url
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
-
 from rest_framework import routers
 
+import upartner.core.urls
+import upartner.user.urls
+from upartner.check.api import CheckFileViewSet
+from upartner.file.api import FileViewSet
+from upartner.nomenclature.api import CountryList, CountryDetail
 from upartner.partner.api import PartnerViewSet, PartnerAccountViewSet
 from upartner.partner.csv_api import PartnerCsvViewSet
 from upartner.user.api import  UserViewSet
-from upartner.nomenclature.api import CountryList, CountryDetail
-
-import upartner.user.urls
-import upartner.core.urls
 
 urlpatterns = [
     url(r'^'     , include(upartner.core.urls, namespace='core')),

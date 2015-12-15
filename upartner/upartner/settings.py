@@ -35,7 +35,8 @@ INSTALLED_APPS = [
     'upartner.user',
     'upartner.core',
     'upartner.nomenclature',
-    'upartner.partner'
+    'upartner.partner',
+    'upartner.file'
 ]
 
 MIDDLEWARE_CLASSES = [

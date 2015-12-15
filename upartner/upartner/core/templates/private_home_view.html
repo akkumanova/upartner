@@ -11,6 +11,8 @@
   <link href="{% static "bower_components\bootstrap\dist\css\bootstrap.css" %}" rel="stylesheet" type="text/css">
   <link href="{% static "bower_components\select2\select2.css" %}" rel="stylesheet" type="text/css">
   <link href="{% static "bower_components\select2-bootstrap-css\select2-bootstrap.css" %}" rel="stylesheet" type="text/css">
+  <link href="{% static "bower_components\blueimp-file-upload\css\jquery.fileupload.css" %}" rel="stylesheet" type="text/css">
+  <link href="{% static "bower_components\blueimp-file-upload\css\jquery.fileupload-ui.css" %}" rel="stylesheet" type="text/css">
 </head>
 <body id="ng-app" ng-app="privateApp" style="background: #F9F8F8;">
   <noscript>
@@ -36,6 +38,11 @@
   <script src="{% static "bower_components\angular-ui-select2\src\select2.js" %}"></script>
   <script src="{% static "bower_components\angular-bootstrap\ui-bootstrap-tpls.js" %}"></script>
   <script src="{% static "bower_components\angular-sanitize\angular-sanitize.js" %}"></script>
+  <script src="{% static "bower_components\jquery-ui\ui\jquery.ui.widget.js" %}"></script>
+  <script src="{% static "bower_components\angular-ui-utils\modules\jq\jq.js" %}"></script>
+  <script src="{% static "bower_components\blueimp-file-upload\js\jquery.iframe-transport.js" %}"></script>
+  <script src="{% static "bower_components\blueimp-file-upload\js\jquery.fileupload.js" %}"></script>
+  <script src="{% static "bower_components\blueimp-file-upload\js\jquery.fileupload-angular.js" %}"></script>
   <script src="{% static "bower_components\bootstrap\js\alert.js" %}"></script>
   <script src="{% static "bower_components\lodash\dist\lodash.js" %}"></script>
   <script src="{% static "bower_components\moment\moment.js" %}"></script>
@@ -58,6 +65,8 @@
   <script src="{% static "js\scaffolding\directives\text\textDirective.js" %}"></script>
   <script src="{% static "js\scaffolding\directives\nomenclature\nomenclatureDirective.js" %}"></script>
   <script src="{% static "js\scaffolding\directives\click\clickDirective.js" %}"></script>
+  <script src="{% static "js\scaffolding\directives\files\fileCtrl.js" %}"></script>
+  <script src="{% static "js\scaffolding\directives\files\fileDirective.js" %}"></script>
   <script src="{% static "js\scaffolding\resources\nomenclatures.js" %}"></script>
   <script src="{% static "js\scaffolding\providers\scModalProvider.js" %}"></script>
   <script src="{% static "js\scaffolding\providers\scaffoldingProvider.js" %}"></script>
