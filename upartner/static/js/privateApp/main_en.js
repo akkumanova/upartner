@@ -48,6 +48,18 @@
       checkFiles_new_cancel: 'Cancel',
       checkFiles_new_file: 'File',
 
+      //checkFiles_edit
+      checkFiles_edit_title: 'View file',
+      checkFiles_edit_import: 'Import',
+      checkFiles_edit_delete: 'Delete',
+      checkFiles_edit_dateCreated: 'Date created',
+      checkFiles_edit_isImported: 'Is imported',
+      checkFiles_edit_dateImported: 'Date imported',
+      checkFiles_edit_partnerId: 'Partner identifier',
+      checkFiles_edit_name: 'Name',
+      checkFiles_edit_result: 'Result',
+      checkFiles_edit_error:'Error',
+
       //modals_choosePartners
       modals_choosePartners_title: 'Choose partners to export',
       modals_choosePartners_continue: 'Continue',

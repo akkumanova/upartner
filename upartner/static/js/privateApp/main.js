@@ -20,6 +20,7 @@
         .state(['root.partners.edit'    , '/:id'      , ['@root', 'static/js/privateApp/partners/views/partnersEdit.html'  , 'PartnersEditCtrl'     ]])
         .state(['root.checkFiles'       , '/checkFiles'                                                                                              ])
         .state(['root.checkFiles.search', ''          , ['@root', 'static/js/privateApp/checks/views/checkFilesSearch.html' , 'CheckFilesSearchCtrl']])
-        .state(['root.checkFiles.new'   , '/new'      , ['@root', 'static/js/privateApp/checks/views/checkFilesNew.html'    , 'CheckFilesNewCtrl'   ]]);
+        .state(['root.checkFiles.new'   , '/new'      , ['@root', 'static/js/privateApp/checks/views/checkFilesNew.html'    , 'CheckFilesNewCtrl'   ]])
+        .state(['root.checkFiles.edit'  , '/:id'      , ['@root', 'static/js/privateApp/checks/views/checkFilesEdit.html'   , 'CheckFilesEditCtrl'  ]]);
   }]);
 }(angular));

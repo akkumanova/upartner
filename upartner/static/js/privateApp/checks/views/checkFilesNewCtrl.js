@@ -18,8 +18,12 @@
              'X-CSRFToken': csrfToken.get()
             },
             data: $scope.file
-          }).then(function () {
-            return $state.go('root.checkFiles.search');
+          }).then(function (result) {
+            return $state.go('root.checkFiles.edit', {
+              id: result.data.id
+            }, {
+              reload: true
+            });
           });
         }
       });

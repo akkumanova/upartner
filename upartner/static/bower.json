@@ -14,6 +14,7 @@
     "lodash": "2.1.0",
     "select2": "3.5.1",
     "select2-bootstrap-css": "fk/select2-bootstrap-css#48cd4b44bc94046cab20e0d345c978483684ab2e",
+    "bootstrap-datepicker": "eternicode/bootstrap-datepicker#8bc254a136110369684dc05a48171682ff1f3a81",
     "jquery": "jquery#1.10",
     "jquery-ui": "1.10.3",
     "blueimp-file-upload": "9.9.4",

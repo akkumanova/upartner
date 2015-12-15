@@ -180,6 +180,10 @@ div.dataTables_paginate ul.pagination{
 	margin-right: 0px;
 }
 
+.select2-container.input-sm.pageSize a.select2-choice {
+    height: 30px;
+}
+
 /*select2*/
 .single .field, .panel.single .panel-body .select2-container.field .select2-choice {
     border-radius: 0px 0px 3px 3px;

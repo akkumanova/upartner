@@ -1,5 +1,7 @@
 import re
 
+from datetime import datetime
+from django.core.exceptions import ValidationError
 from django.db import models
 from django.contrib.auth.models import User
 
@@ -15,6 +17,13 @@ class CheckFile(models.Model):
     is_imported = models.BooleanField()
     date_created = models.DateTimeField()
     date_imported = models.DateTimeField()
+
+    def mark_imported(self):
+        if self.is_imported:
+            raise ValidationError('Cannot import same file twice')
+
+        self.is_imported = True
+        self.date_imported = datetime.now()
 
     class Meta:
         db_table = 'uber_check_files'

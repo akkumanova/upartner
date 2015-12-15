@@ -2,11 +2,12 @@ import csv
 from datetime import date
 
 from django.http import Http404, HttpResponse
+from django.db import connection
 
 from rest_framework.response import Response
 from rest_framework import viewsets
 from rest_framework import status
-from rest_framework.decorators import permission_classes
+from rest_framework.decorators import detail_route, permission_classes
 
 from .models import CheckFile, Check
 from upartner.file.models import File
@@ -26,13 +27,14 @@ class CheckFileViewSet(viewsets.ViewSet):
             raise Http404
 
     def list(self, request):
-        check_files = self.queryset
+        check_files = CheckFile.objects.all() \
+            .values('pk', 'is_imported', 'date_created', 'date_imported')
 
         result = map((lambda cf: {
-            'id': cf.pk,
-            'isImported': cf.is_imported,
-            'dateCreated': cf.date_created,
-            'dateImported': cf.date_imported
+            'id': cf['pk'],
+            'isImported': cf['is_imported'],
+            'dateCreated': cf['date_created'],
+            'dateImported': cf['date_imported']
 
         }), list(check_files))
 
@@ -93,4 +95,60 @@ class CheckFileViewSet(viewsets.ViewSet):
 
             Check.objects.bulk_create(checks)
 
-        return HttpResponse(status=status.HTTP_201_CREATED)
+        return HttpResponse({'id': check_file.pk}, status=status.HTTP_201_CREATED)
+
+    def retrieve(self, request, pk):
+        check_file = self.get_object(pk)
+
+        data = {
+            'id': check_file.pk,
+            'isImported': check_file.is_imported,
+            'dateCreated': check_file.date_created,
+            'dateImported': check_file.date_imported
+        }
+        return Response(data)
+
+    @detail_route(methods=['get'])
+    def items(self, request, pk):
+        checks = Check.objects.all() \
+            .filter(check_file__pk=pk) \
+            .values('id_str', 'name', 'result', 'is_valid', 'error')
+
+        result = map((lambda cf: {
+            'id': cf['id_str'],
+            'name': cf['name'],
+            'result': cf['result'],
+            'isValid': cf['is_valid'],
+            'error': cf['error']
+
+        }), list(checks))
+
+        return Response(result)
+
+    @detail_route(methods=['post'])
+    def importdata(self, request, pk):
+        # writing raw query because bulk_insert does not support joins
+        cursor = connection.cursor()
+
+        check_file = self.get_object(pk)
+        check_file.mark_imported()
+        check_file.save()
+
+        cursor.execute("""UPDATE uber_partners AS ub
+                          SET check_result = uc.check_result
+                          FROM uber_checks as uc
+                          WHERE ub.id = uc.partner_id AND uc.is_valid AND ub.check_result IS NULL AND uc.check_file_id  = %s""", [pk])
+
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
+    def destroy(self, request, pk=None):
+        check_file = self.get_object(pk)
+
+        if (check_file.is_imported):
+            return HttpResponse(
+                status=status.HTTP_428_PRECONDITION_REQUIRED,
+                reason="Cannot delete imported file.")
+
+        check_file.delete()
+
+        return Response(status=status.HTTP_204_NO_CONTENT)
