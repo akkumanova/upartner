@@ -1,13 +1,13 @@
 import re
-
 from datetime import datetime
+
+from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 from django.db import models
-from django.contrib.auth.models import User
 
-from upartner.core.choices import CheckResultChoice
-from upartner.partner.models import Partner
 from upartner.file.models import File
+from upartner.partner.models import Partner
+from upartner.utils.choices import CheckResultChoice
 
 class CheckFile(models.Model):
     file = models.OneToOneField(

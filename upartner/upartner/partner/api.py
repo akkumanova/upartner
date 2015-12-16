@@ -1,14 +1,14 @@
-from django.http import Http404
 from django.core.exceptions import SuspiciousOperation
-
-from rest_framework.response import Response
-from rest_framework import viewsets
+from django.http import Http404
 from rest_framework import status
+from rest_framework import viewsets
 from rest_framework.decorators import detail_route, list_route, permission_classes
+from rest_framework.response import Response
 
+from upartner.utils.permissions import IsStaffPermission
 from .models import Partner
 from .threads import EmailThread
-from upartner.core.permissions import IsStaffPermission
+
 
 @permission_classes((IsStaffPermission, ))
 class PartnerViewSet(viewsets.ViewSet):
@@ -121,7 +121,6 @@ class PartnerViewSet(viewsets.ViewSet):
                 content)
 
             mail_thread.start()
-            mail_thread.run()
 
         return Response(status=status.HTTP_204_NO_CONTENT)
 

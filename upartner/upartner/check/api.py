@@ -1,20 +1,20 @@
 import csv
 from datetime import date
 
-from django.http import Http404, HttpResponse
 from django.db import connection
-
-from rest_framework.response import Response
-from rest_framework import viewsets
+from django.http import Http404, HttpResponse
 from rest_framework import status
+from rest_framework import viewsets
 from rest_framework.decorators import detail_route, permission_classes
+from rest_framework.response import Response
 
-from .models import CheckFile, Check
 from upartner.file.models import File
 from upartner.partner.models import Partner
-from upartner.core.permissions import IsStaffPermission
-from upartner.core.string_utils import StringUtils
-from upartner.core.choices import CheckResultChoice
+from upartner.utils.choices import CheckResultChoice
+from upartner.utils.permissions import IsStaffPermission
+from upartner.utils.string_utils import StringUtils
+from .models import CheckFile, Check
+
 
 @permission_classes((IsStaffPermission, ))
 class CheckFileViewSet(viewsets.ViewSet):

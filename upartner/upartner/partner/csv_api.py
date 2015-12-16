@@ -1,12 +1,11 @@
 import csv
 
 from django.http import StreamingHttpResponse
-
 from rest_framework import viewsets
 from rest_framework.decorators import permission_classes, list_route
 
+from upartner.utils.permissions import IsStaffPermission
 from .models import Partner
-from upartner.core.permissions import IsStaffPermission
 
 class Echo(object):
     def write(self, value):
